@@ -3,6 +3,8 @@ import { useState } from "react"
 
 function App() {
 
+  const [success, setSuccess] = useState(false)
+
   const [formData, setFormData] = useState({
     author: '',
     title: '',
@@ -15,7 +17,6 @@ function App() {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
 
     setFormData({ ...formData, [key]: value })
-
   }
 
   function handleSubmit(e) {
@@ -35,10 +36,11 @@ function App() {
     })
       .then(res => res.json)
       .then(data => {
-        console.log(data);
+        setSuccess(true)
+        console.log('dati inviati con successo ', data);
       })
       .catch(err => {
-        console.log(err);
+        console.log('Errore invio dati :', err);
       })
   }
 
@@ -53,8 +55,21 @@ function App() {
         </nav>
       </header>
 
+
+
       <main>
         <div className="container my-4">
+
+          {/* alert */}
+          {success ? (
+            <div class="alert alert-success d-flex align-items-center gap-3" role="alert">
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              <div>
+                Dati inviati con successo!
+              </div>
+            </div>) : ''}
+
+
           <div className="row">
             <div className="col">
               <div className="card p-3">
@@ -115,7 +130,7 @@ function App() {
                     type="submit"
                     className="btn btn-primary mt-4"
                   >
-                    Submit
+                    Send <i className="fa fa-paper-plane" aria-hidden="true"></i>
                   </button>
 
                 </form>
