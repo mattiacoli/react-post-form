@@ -29,19 +29,19 @@ function App() {
     const url = "https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts"
 
     function validation() {
-      if (formData.author.trim().length <= 4) {
+      if (formData.author.trim().length < 4) {
         setError(true)
 
         return false
       }
 
-      if (formData.title.trim().length <= 5) {
+      if (formData.title.trim().length < 5) {
         setError(true)
 
         return false
       }
 
-      if (formData.body.trim().length <= 50) {
+      if (formData.body.trim().length < 10) {
         setError(true)
 
         return false
@@ -62,7 +62,7 @@ function App() {
       },
       body: JSON.stringify(formData)
     })
-      .then(res => res.json)
+      .then(res => res.json())
       .then(() => {
         setSuccess(true)
         console.log('dati inviati con successo ', formData);
@@ -99,14 +99,6 @@ function App() {
               </div>
             </div>) : ''}
 
-          {error ? (
-            <div className="alert alert-danger d-flex align-items-center gap-3" role="alert">
-              <i className="fa fa-info-circle" aria-hidden="true"></i>
-              <div>
-                Errore nell'invio dati!
-              </div>
-            </div>) : ''}
-
 
 
           <div className="row">
@@ -129,7 +121,7 @@ function App() {
                       onChange={handleData}
 
                     />
-                    <small id="helpId" className="form-text text-muted">insert author name</small>
+                    <small id="helpId" className={`form-text ${error ? 'text-danger' : 'text-muted'} `}>{error ? 'Author must be at least 4 characters' : 'insert author name'}</small>
                   </div>
 
                   <div className="mb-3">
@@ -144,7 +136,7 @@ function App() {
                       value={formData.title}
                       onChange={handleData}
                     />
-                    <small id="helpId" className="form-text text-muted">insert posts title</small>
+                    <small id="helpId" className={`form-text ${error ? 'text-danger' : 'text-muted'} `}>{error ? 'Title must be at least 5 characters' : 'insert Title'}</small>
                   </div>
 
                   <div className="mb-3">
@@ -152,12 +144,13 @@ function App() {
                     <textarea className="form-control" name="body" id="body" rows="3"
                       value={formData.body}
                       onChange={handleData}></textarea>
+                    <small id="helpId" className={`form-text ${error ? 'text-danger' : 'text-muted'} `}>{error ? 'Body must be at least 10 characters' : 'insert Body'}</small>
                   </div>
 
                   <div className="form-check">
                     <input
                       name="public"
-                      className={`form-check-input ${error ? 'is-invalid' : ''} ${success ? 'is-valid' : ''}`}
+                      className='form-check-input'
                       checked={formData.public}
                       onChange={handleData}
                       id="public"
@@ -179,11 +172,6 @@ function App() {
           </div>
         </div>
       </main>
-
-
-
-
-
     </>
   )
 }
