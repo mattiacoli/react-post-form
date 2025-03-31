@@ -18,7 +18,8 @@ function App() {
     const key = e.target.name
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
 
-    setFormData({ ...formData, [key]: value })
+    setFormData({ ...formData, [key]: value });
+    setError(false);
   }
 
   function handleSubmit(e) {
@@ -64,7 +65,7 @@ function App() {
     })
       .then(res => res.json())
       .then(() => {
-        setSuccess(true)
+        setError(false);
         console.log('dati inviati con successo ', formData);
       })
       .catch(err => {
