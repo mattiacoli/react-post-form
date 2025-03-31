@@ -5,6 +5,8 @@ function App() {
 
   const [success, setSuccess] = useState(false)
 
+  const [error, setError] = useState(false)
+
   const [formData, setFormData] = useState({
     author: '',
     title: '',
@@ -24,8 +26,34 @@ function App() {
 
     console.log(formData);
 
-
     const url = "https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts"
+
+    function validation() {
+      if (formData.author.trim().length <= 4) {
+        setError(true)
+
+        return false
+      }
+
+      if (formData.title.trim().length <= 5) {
+        setError(true)
+
+        return false
+      }
+
+      if (formData.body.trim().length <= 50) {
+        setError(true)
+
+        return false
+      }
+
+      return true
+
+    }
+
+    if (!validation()) {
+      return
+    }
 
     fetch(url, {
       method: "POST",
@@ -40,6 +68,8 @@ function App() {
         console.log('dati inviati con successo ', data);
       })
       .catch(err => {
+        setError(true)
+        setSuccess(false)
         console.log('Errore invio dati :', err);
       })
   }
@@ -62,12 +92,21 @@ function App() {
 
           {/* alert */}
           {success ? (
-            <div class="alert alert-success d-flex align-items-center gap-3" role="alert">
-              <i class="fa fa-info-circle" aria-hidden="true"></i>
+            <div className="alert alert-success d-flex align-items-center gap-3" role="alert">
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
               <div>
                 Dati inviati con successo!
               </div>
             </div>) : ''}
+
+          {error ? (
+            <div className="alert alert-danger d-flex align-items-center gap-3" role="alert">
+              <i className="fa fa-info-circle" aria-hidden="true"></i>
+              <div>
+                Errore nell'invio dati!
+              </div>
+            </div>) : ''}
+
 
 
           <div className="row">
@@ -81,7 +120,7 @@ function App() {
                     <label htmlFor="author" className="form-label fw-bold">Author</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`form-control  ${error ? 'is-invalid' : ''}`}
                       name="author"
                       id="author"
                       aria-describedby="helpId"
@@ -97,7 +136,7 @@ function App() {
                     <label htmlFor="title" className="form-label fw-bold">Title</label>
                     <input
                       type="text"
-                      className="form-control"
+                      className={`form-control  ${error ? 'is-invalid' : ''}`}
                       name="title"
                       id="title"
                       aria-describedby="helpId"
@@ -118,7 +157,7 @@ function App() {
                   <div className="form-check">
                     <input
                       name="public"
-                      className="form-check-input"
+                      className={`form-check-input ${error ? 'is-invalid' : ''}`}
                       checked={formData.public}
                       onChange={handleData}
                       id="public"
