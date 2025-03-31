@@ -63,9 +63,9 @@ function App() {
       body: JSON.stringify(formData)
     })
       .then(res => res.json)
-      .then(data => {
+      .then(() => {
         setSuccess(true)
-        console.log('dati inviati con successo ', data);
+        console.log('dati inviati con successo ', formData);
       })
       .catch(err => {
         setError(true)
