@@ -7,26 +7,40 @@ function App() {
     author: '',
     title: '',
     body: '',
-    public: '',
+    public: false,
   })
 
   function handleData(e) {
     const key = e.target.name
-    const value = e.target.value
+    const value = e.target.type === "checkbox" ? e.target.checked : e.target.value
 
     setFormData({ ...formData, [key]: value })
+
   }
 
-  function handleFormSubmit(e) {
-
+  function handleSubmit(e) {
     e.preventDefault()
 
+    console.log(formData);
 
 
+    const url = "https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts"
 
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(res => res.json)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
-
-
 
 
   return (
@@ -45,7 +59,8 @@ function App() {
             <div className="col">
               <div className="card p-3">
 
-                <form method="POST">
+                <form method="POST"
+                  onSubmit={handleSubmit}>
 
                   <div className="mb-3">
                     <label htmlFor="author" className="form-label fw-bold">Author</label>
@@ -87,13 +102,13 @@ function App() {
 
                   <div className="form-check">
                     <input
-                      className="form-check-input"
-                      type="checkbox"
                       name="public"
-                      value={formData.public}
+                      className="form-check-input"
+                      checked={formData.public}
+                      onChange={handleData}
                       id="public"
-                    />
-                    <label className="form-check-label" htmlFor=""> Public</label>
+                      type="checkbox" />
+                    <label className="form-check-label" htmlFor="public"> Public</label>
                   </div>
 
                   <button
