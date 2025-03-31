@@ -120,7 +120,7 @@ function App() {
                     <label htmlFor="author" className="form-label fw-bold">Author</label>
                     <input
                       type="text"
-                      className={`form-control  ${error ? 'is-invalid' : ''}`}
+                      className={`form-control  ${error ? 'is-invalid' : ''} ${success ? 'is-valid' : ''}`}
                       name="author"
                       id="author"
                       aria-describedby="helpId"
@@ -136,7 +136,7 @@ function App() {
                     <label htmlFor="title" className="form-label fw-bold">Title</label>
                     <input
                       type="text"
-                      className={`form-control  ${error ? 'is-invalid' : ''}`}
+                      className={`form-control  ${error ? 'is-invalid' : ''} ${success ? 'is-valid' : ''}`}
                       name="title"
                       id="title"
                       aria-describedby="helpId"
@@ -157,7 +157,7 @@ function App() {
                   <div className="form-check">
                     <input
                       name="public"
-                      className={`form-check-input ${error ? 'is-invalid' : ''}`}
+                      className={`form-check-input ${error ? 'is-invalid' : ''} ${success ? 'is-valid' : ''}`}
                       checked={formData.public}
                       onChange={handleData}
                       id="public"
