@@ -10,6 +10,22 @@ function App() {
     public: '',
   })
 
+  function handleData(e) {
+    const key = e.target.name
+    const value = e.target.value
+
+    setFormData({ ...formData, [key]: value })
+  }
+
+  function handleFormSubmit(e) {
+
+    e.preventDefault()
+
+
+
+
+  }
+
 
 
 
@@ -40,6 +56,8 @@ function App() {
                       id="author"
                       aria-describedby="helpId"
                       placeholder=""
+                      value={formData.author}
+                      onChange={handleData}
 
                     />
                     <small id="helpId" className="form-text text-muted">insert author name</small>
@@ -54,22 +72,26 @@ function App() {
                       id="title"
                       aria-describedby="helpId"
                       placeholder=""
+                      value={formData.title}
+                      onChange={handleData}
                     />
                     <small id="helpId" className="form-text text-muted">insert posts title</small>
                   </div>
 
                   <div className="mb-3">
                     <label htmlFor="body" className="form-label fw-bold">Body</label>
-                    <textarea className="form-control" name="body" id="body" rows="3"></textarea>
+                    <textarea className="form-control" name="body" id="body" rows="3"
+                      value={formData.body}
+                      onChange={handleData}></textarea>
                   </div>
 
                   <div className="form-check">
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      value=""
-                      id=""
-                      checked
+                      name="public"
+                      value={formData.public}
+                      id="public"
                     />
                     <label className="form-check-label" htmlFor=""> Public</label>
                   </div>
